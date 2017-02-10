@@ -1,4 +1,4 @@
-function [setx, sety] = train_test_sets(n, k, r)
+function [settrain, settest] = train_test_sets(n, k, r)
 
     % Separate the data between k train and test sets, with k-fold (r = 0) or random (r > 0)
     % n is the size of the data
@@ -6,11 +6,14 @@ function [setx, sety] = train_test_sets(n, k, r)
     % If r > 0, r is the number of different sets
     
     if (r == 0)
-
+        
     else
-        setx = zeros(n,k);
-        for i=1:k
-            sets(:,i) = randperm(n)';
+        settrain = zeros(n-k,r);
+        settest = zeros(k,r);
+        for i=1:r
+            rr = randperm(n)';
+            settest(:,i) = rr(1:k);
+            settrain(:,i) = rr(k+1:end);
         end
     end
 end
