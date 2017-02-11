@@ -26,17 +26,18 @@ function plot_auc(auc14, auc15)
     ylabel('True positive');
 
     
-    figure; hold on;
-    for i=1:size(auc14,2)
-        if size(auc14{2,i} > 0)
-            c = auc14{2,i};
-            plot((0:size(c,2)-1)/(size(c,2)-1), c, '-', 'color', colors(i,:));
+    if (size(auc14,1) > 1)        
+        figure; hold on;
+        for i=1:size(auc14,2)
+            if size(auc14{2,i} > 0)
+                c = auc14{2,i};
+                plot((0:size(c,2)-1)/(size(c,2)-1), c, '-', 'color', colors(i,:));
+            end
         end
+        title('Testing AUC for 2014');
+        xlabel('False positive');
+        ylabel('True positive');
     end
-    title('Testing AUC for 2014');
-    xlabel('False positive');
-    ylabel('True positive');
-
 
     figure; hold on;
     for i=1:size(auc15,2)
@@ -49,16 +50,17 @@ function plot_auc(auc14, auc15)
     xlabel('False positive');
     ylabel('True positive');
 
-    
-    figure; hold on;
-    for i=1:size(auc15,2)
-        if size(auc15{2,i} > 0)
-            c = auc15{2,i};
-            plot((0:size(c,2)-1)/(size(c,2)-1), c, '-', 'color', colors(i,:));
+    if (size(auc15,1) > 1)        
+        figure; hold on;
+        for i=1:size(auc15,2)
+            if size(auc15{2,i} > 0)
+                c = auc15{2,i};
+                plot((0:size(c,2)-1)/(size(c,2)-1), c, '-', 'color', colors(i,:));
+            end
         end
+        title('Testing AUC for 2015');
+        xlabel('False positive');
+        ylabel('True positive');
     end
-    title('Testing AUC for 2015');
-    xlabel('False positive');
-    ylabel('True positive');
     
 end
