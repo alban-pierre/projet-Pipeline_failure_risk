@@ -50,7 +50,7 @@ for i=1:size(train_i,2)
     if (1)
         [prediction_train, prediction_test] = prediction1(trainx, trainy, testx);
     end
-        
+    
     % End of the main part, here we only compute the error and plot it
 
     % Compute scores and curves and store the submission file
