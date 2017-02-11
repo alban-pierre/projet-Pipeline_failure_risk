@@ -34,7 +34,7 @@ function [datax, datay] = load_data(test);
         end
     end
     fprintf(2, '\n');   
-    warning('on');
+    warning('default');
 
     if (nargin <= 0)
         a = textread ('../dataVeolia/output_train.csv', "%s");
@@ -50,6 +50,6 @@ function [datax, datay] = load_data(test);
             end
         end
         fprintf(2, '\n');
-        warning('on');
+        warning('default');
     end
 end
