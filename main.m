@@ -5,7 +5,7 @@ if ((exist('datax') ~= 1) || (exist('datay') ~= 1))
 end
 
 n = size(datax,1);
-testsize = 1000;
+testsize = 6476;
 nb_tests = 100;
 
 [train_i, test_i] = train_test_sets(n, testsize, nb_tests);
@@ -24,8 +24,14 @@ for i=1:size(train_i,2)
     
     % Main part, where all the prediction is done
     %tt = time();
-    prediction_train = randi(2,n-testsize,2)-1;
-    prediction_test = randi(2,testsize,2)-1;
+	if (0)
+		prediction_train = randi(2,n-testsize,2)-1;
+		prediction_test = randi(2,testsize,2)-1;
+	end
+	if (1)
+		[prediction_train, prediction_test] = prediction1(trainx, trainy, testx);
+	end
+		
     %time() - tt
     % End of the main part, here we only compute the error and plot it
     %tt = time();
