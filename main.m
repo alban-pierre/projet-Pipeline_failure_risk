@@ -13,10 +13,11 @@ end
 % Options (useless if we are submitting a file)
 n = size(datax,1);
 testsize = 6476; % The testsize
+trainsize = n-testsize;
 nb_tests = 200; % The number of tests
 
 % Defining train and test sets
-[train_i, test_i] = train_test_sets(n, testsize, nb_tests);
+[train_i, test_i] = random_train_test_sets(trainsize, testsize, nb_tests);
 
 scores = zeros(2, nb_tests);
 clear auc14;
@@ -51,11 +52,9 @@ for i=1:size(train_i,2)
     if (0)
         [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 0.1);
     end
-    if (0)
-        [prediction_train, prediction_test] = prediction2(trainx, trainy, testx);
-    end
     if (1)
-        [prediction_train, prediction_test] = prediction3(trainx, trainy, testx);
+        kernel = @(x1, x2) = gaussian_kernel(x1, x2, 0.1);
+        [prediction_train, prediction_test] = kernel_ridge_regression(kernel, trainx, trainy, testx, 0.1);
     end
     
     % End of the main part, here we only compute the error and plot it
