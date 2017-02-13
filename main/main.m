@@ -1,5 +1,14 @@
 % The main file
 
+addpath('../data/');
+addpath('../errors/');
+addpath('../kernels/');
+addpath('../plots/');
+addpath('../regressions/');
+addpath('../representations/');
+addpath('../sets/');
+addpath('../utils/');
+
 submit_file = 0; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
 
 % Loading datasets and formatting the data
