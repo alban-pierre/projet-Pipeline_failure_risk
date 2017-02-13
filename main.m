@@ -1,6 +1,6 @@
 % The main file
 
-submit_file = 0; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
+submit_file = 1; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
 
 % Loading datasets and formatting the data
 if ((exist('datax') ~= 1) || (exist('datay') ~= 1))
@@ -11,8 +11,9 @@ if (submit_file && (exist('datas') ~= 1))
 end
 
 % Options (useless if we are submitting a file)
+n = size(datax,1);
 testsize = 6476; % The testsize
-nb_tests = 100; % The number of tests
+nb_tests = 200; % The number of tests
 
 % Defining train and test sets
 [train_i, test_i] = train_test_sets(n, testsize, nb_tests);
@@ -47,8 +48,14 @@ for i=1:size(train_i,2)
         prediction_train = randi(2,n-testsize,2)-1;
         prediction_test = randi(2,testsize,2)-1;
     end
+    if (0)
+        [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 0.1);
+    end
+    if (0)
+        [prediction_train, prediction_test] = prediction2(trainx, trainy, testx);
+    end
     if (1)
-        [prediction_train, prediction_test] = prediction1(trainx, trainy, testx);
+        [prediction_train, prediction_test] = prediction3(trainx, trainy, testx);
     end
     
     % End of the main part, here we only compute the error and plot it
