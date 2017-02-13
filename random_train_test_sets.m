@@ -11,7 +11,7 @@ function [settrain, settest] = random_train_test_sets(sizetrain, sizetest, nbr)
     % settrain : {1*nbr} (sizetrain*1) : The indexes of train sets
     % settest  : {1*nbr} (sizetest*1)   : The indexes of test sets
 
-    for i=1:r
+    for i=1:nbr
         rr = randperm(sizetrain+sizetest)';
         settest{i} = rr(1:sizetest);
         settrain{i} = rr(sizetest+1:end);
