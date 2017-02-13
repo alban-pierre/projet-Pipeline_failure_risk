@@ -20,6 +20,8 @@ function [prediction_train, prediction_test] = kernel_ridge_regression(kernel, t
     % prediction_test  : (Nte*Dy) : The testing prediction
     
     assert(nargin >= 4, 'Error : kernel_ridge_regression requires at least 4 arguments : kernel, trainx, trainy and testx');
+    assert(size(trainx,1) == size(trainy,1), 'trainx and trainy must contain the same number of examples');
+    assert(size(trainx,2) == size(testx,2), 'trainx and testx examples must have the same dimension');
 
     if (nargin < 5)
         lambda = 1;

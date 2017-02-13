@@ -19,7 +19,10 @@ function [prediction_train, prediction_test] = ridge_regression(trainx, trainy, 
     % prediction_test  : (Nte*Dy) : The testing prediction
     
     assert(nargin >= 3, 'Error : ridge_regression requires at least 3 arguments : trainx, trainy and testx');
-
+    assert(size(trainx,1) == size(trainy,1), 'trainx and trainy must contain the same number of examples');
+    assert(size(trainx,2) == size(testx,2), 'trainx and testx examples must have the same dimension');
+    
+    
     if (nargin < 4)
         lambda = 1;
     else
