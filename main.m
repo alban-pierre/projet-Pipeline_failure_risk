@@ -12,8 +12,8 @@ end
 
 % Options (useless if we are submitting a file)
 n = size(datax,1);
-testsize = 500;%6476; % The testsize
-trainsize = 1500;%n-testsize;
+testsize = 5000;%6476; % The testsize
+trainsize = 10000;%n-testsize;
 nb_tests = 2; % The number of tests
 
 % Defining train and test sets
@@ -49,10 +49,10 @@ for i=1:size(train_i,2)
         prediction_train = randi(2,n-testsize,2)-1;
         prediction_test = randi(2,testsize,2)-1;
     end
-    if (0)
+    if (1)
         [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 0.1);
     end
-    if (1)
+    if (0)
         kernel = @(x1, x2) laplacian_kernel(x1, x2, 0.1);
         [prediction_train, prediction_test] = kernel_ridge_regression(kernel, trainx, trainy, testx, 0.1);
     end
@@ -60,15 +60,22 @@ for i=1:size(train_i,2)
     % End of the main part, here we only compute the error and plot it
 
     % Compute scores and curves and store the submission file
-    [scores(1,i), auc14{1,i}, auc15{1,i}] = compute_auc(prediction_train, trainy);
+    [sc, auc] = auc_error(prediction_train, trainy);
+    scores(1,i) = sc*[0.6; 0.4];
+    auc14{1,i} = auc{1};
+    auc15{1,i} = auc{2};
         
     if (submit_file)
         create_submit_file(prediction_test);
     else
-        [scores(2,i), auc14{2,i}, auc15{2,i}] = compute_auc(prediction_test, testy);
+        [sc, auc] = auc_error(prediction_test, testy);
+        scores(2,i) = sc*[0.6; 0.4];
+        auc14{2,i} = auc{1};
+        auc15{2,i} = auc{2};
     end
 end
 
 % Print scores and plot auc curves
 mean(scores, 2)
-plot_auc(auc14, auc15);
+plot_auc(auc14, -1, {'Training AUC for 2014', 'Testing AUC for 2014'});
+plot_auc(auc15, -1, {'Training AUC for 2015', 'Testing AUC for 2015'});
