@@ -1,6 +1,6 @@
 % The main file
 
-submit_file = 1; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
+submit_file = 0; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
 
 % Loading datasets and formatting the data
 if ((exist('datax') ~= 1) || (exist('datay') ~= 1))
@@ -12,9 +12,9 @@ end
 
 % Options (useless if we are submitting a file)
 n = size(datax,1);
-testsize = 6476; % The testsize
-trainsize = n-testsize;
-nb_tests = 200; % The number of tests
+testsize = 500;%6476; % The testsize
+trainsize = 1500;%n-testsize;
+nb_tests = 2; % The number of tests
 
 % Defining train and test sets
 [train_i, test_i] = random_train_test_sets(trainsize, testsize, nb_tests);
@@ -53,7 +53,7 @@ for i=1:size(train_i,2)
         [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 0.1);
     end
     if (1)
-        kernel = @(x1, x2) = gaussian_kernel(x1, x2, 0.1);
+        kernel = @(x1, x2) laplacian_kernel(x1, x2, 0.1);
         [prediction_train, prediction_test] = kernel_ridge_regression(kernel, trainx, trainy, testx, 0.1);
     end
     
