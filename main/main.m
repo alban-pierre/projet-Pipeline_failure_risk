@@ -1,15 +1,7 @@
 % The main file
 
-addpath('../data/');
-addpath('../errors/');
-addpath('../kernels/');
-addpath('../plots/');
-addpath('../regressions/');
-addpath('../representations/');
-addpath('../sets/');
-addpath('../utils/');
-
-submit_file = 0; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
+init;
+submit_file = 1; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
 
 % Loading datasets and formatting the data
 if ((exist('datainitx') ~= 1) || (exist('datainity') ~= 1))
@@ -26,7 +18,7 @@ trainsize = n-testsize;
 nb_tests = 10; % The number of tests
 
 % Defining train and test sets
-[train_i, test_i] = random_train_test_sets(trainsize, testsize, nb_tests);
+[train_i, test_i] = random_train_test_sets(trainsize, testsize, nb_tests, 7);
 
 scores = zeros(2, nb_tests);
 clear auc14;
@@ -68,7 +60,7 @@ for i=1:size(train_i,2)
         prediction_test = randi(2,testsize,2)-1;
     end
     if (1)
-        [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 0.1);
+        [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 10000);
     end
     if (0)
         kernel = @(x1, x2) laplacian_kernel(x1, x2, 0.1);
