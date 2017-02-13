@@ -30,7 +30,8 @@ function [prediction_train, prediction_test] = kernel_ridge_regression(kernel, t
     end
 
     [Ntr, Dx] = size(trainx);
-
+    Nte = size(testx,1);
+    
     ktr = kernel(trainx, trainx);
     assert(all(size(ktr) == [Ntr,Ntr]), 'Error : the kernel has dimension problems, it must be a function @(N1*D, N2*D) -> (N1*N2)');
     alpha = (ktr + lambda*Ntr*eye(Ntr))^(-1)*trainy;

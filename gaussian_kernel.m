@@ -25,7 +25,6 @@ function k = gaussian_kernel(x1, x2, hyp1)
     end
     
     d = sqdist(x1', x2');
-    k = exp(-d./(sigma^2));
+    k = exp(-d./(2*sigma^2));
     
 end
-
