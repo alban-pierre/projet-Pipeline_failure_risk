@@ -7,7 +7,7 @@ function create_submit_file(prediction_test)
 
     pred = (prediction_test-repmat(mi,9713,1)) ./ (repmat(ma-mi,9713,1));
 
-    FID = fopen('../submit/submit.csv', 'w+');
+    FID = fopen('../../submit/submit.csv', 'w+');
 
     fprintf(FID, 'Id;2014;2015\n');
 

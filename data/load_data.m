@@ -3,10 +3,10 @@ function [datax, datay] = load_data(test);
 % Function that loads the data (the test data if an argument is given)
 
     if (nargin > 0)
-        a = textread ('../dataVeolia/input_test.csv', "%s");
+        a = textread ('../../dataVeolia/input_test.csv', "%s");
         datay = 0;
     else
-        a = textread ('../dataVeolia/input_train.csv', "%s");
+        a = textread ('../../dataVeolia/input_train.csv', "%s");
     end
     datax = zeros(size(a,1)-1, 13);
     warning('off');
@@ -37,7 +37,7 @@ function [datax, datay] = load_data(test);
     warning('default');
 
     if (nargin <= 0)
-        a = textread ('../dataVeolia/output_train.csv', "%s");
+        a = textread ('../../dataVeolia/output_train.csv', "%s");
         datay = zeros(size(a,1)-1, 3);
         warning('off');
         for i=1:size(a,1)-1
