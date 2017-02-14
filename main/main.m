@@ -16,7 +16,7 @@ end
 trainsize = 12951; % The trainsize
 testsize = 6476; % The testsize
 nb_tests = 10; % The number of tests
-setrand = 2; % The random generator beginning (-1 = no set)
+setrand = 3; % The random generator beginning (-1 = no set)
 k = 10; %k of k_fold sets
 algo = algo_options();
 
@@ -27,6 +27,8 @@ elseif (0)
     [train_i, test_i] = k_fold_train_test_sets(size(datainitx,1), k, nb_tests, setrand)
 end
 scores = zeros(2, size(train_i, 2));
+clear auc14;
+clear auc15;
 
 % Modification of the data representation
 tt = time();

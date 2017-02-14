@@ -40,22 +40,11 @@ function [prediction_test, err_train, sorted_err_train] = prediction(algo, train
     
     % Choices of errors
     if (algo.error == 0)
-        [sc, auc_train] = auc_error(prediction_train, trainy);
-        err_train = sc;
-        sorted_err_train = err_train;
+        [err_train, sorted_err_train] = auc_error(prediction_train, trainy);
     elseif (algo.error == 1)
         [err_train, sorted_err_train] = abs_error(prediction_train, trainy);
     elseif (algo.error == 2)
         [err_train, sorted_err_train] = square_error(prediction_train, trainy);
-    end
-
-    % Choices of plots
-    if (algo.plotauc)
-        assert(algo.error == 0, 'You must use auc error to plot auc curves');
-        auc14{1,1} = auc_train{1};
-        auc15{1,1} = auc_train{2};
-        plot_auc(auc14, algo.auc_nfig, {'Training AUC for 2014', 'Testing AUC for 2014'});
-        plot_auc(auc15, 2+algo.auc_nfig, {'Training AUC for 2015', 'Testing AUC for 2015'});
     end
 
 end
