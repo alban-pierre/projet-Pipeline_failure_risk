@@ -13,7 +13,9 @@ function [settrain, settest] = random_train_test_sets(sizetrain, sizetest, nbr, 
     % settest  : {1*nbr} (sizetest*1)   : The indexes of test sets
 
     if (nargin >= 4)
-        rand('seed', setrand);
+        if (setrand >= 0)
+            rand('seed', setrand);
+        end
     end
     
     for i=1:nbr

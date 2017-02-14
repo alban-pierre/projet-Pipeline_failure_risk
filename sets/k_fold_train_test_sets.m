@@ -13,7 +13,9 @@ function [settrain, settest] = k_fold_train_test_sets(n, k, nbr, setrand)
     % settest  : {1*(nbr*k)} ((n/k)*1)   : The indexes of test sets
 
     if (nargin >= 4)
-        rand('seed', setrand);
+        if (setrand >= 0)
+            rand('seed', setrand);
+        end
     end
     
     if ((k>n) || (k<2))
