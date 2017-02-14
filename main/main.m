@@ -1,7 +1,8 @@
 % The main file
 
+% Initialization of paths
 init;
-submit_file = 1; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
+submit_file = 0; % Set it to 1 to produce a result file to submit on data challenge, 0 otherwise
 
 % Loading datasets and formatting the data
 if ((exist('datainitx') ~= 1) || (exist('datainity') ~= 1))
@@ -12,17 +13,20 @@ if (submit_file && (exist('datas') ~= 1))
 end
 
 % Options (useless if we are submitting a file)
-n = size(datainitx,1);
+trainsize = 12951; % The trainsize
 testsize = 6476; % The testsize
-trainsize = n-testsize;
 nb_tests = 10; % The number of tests
+setrand = 2; % The random generator beginning (-1 = no set)
+k = 10; %k of k_fold sets
+algo = algo_options();
 
 % Defining train and test sets
-[train_i, test_i] = random_train_test_sets(trainsize, testsize, nb_tests, 7);
-
-scores = zeros(2, nb_tests);
-clear auc14;
-clear auc15;
+if (1)
+    [train_i, test_i] = random_train_test_sets(trainsize, testsize, nb_tests, setrand);
+elseif (0)
+    [train_i, test_i] = k_fold_train_test_sets(size(datainitx,1), k, nb_tests, setrand)
+end
+scores = zeros(2, size(train_i, 2));
 
 % Modification of the data representation
 tt = time();
@@ -45,44 +49,24 @@ end
 % For each train set
 tt = time();
 for i=1:size(train_i,2)
-
-    % create train and test sets
-    if (~submit_file)
+    if (submit_file)
+        [prediction_test, err_train, auc_train] = prediction(algo, trainx, trainy, testx);
+        create_submit_file(prediction_test);
+    else
+        % create train and test sets
         trainx = datax(train_i{i},:);
         trainy = datay(train_i{i},:);
         testx = datax(test_i{i},:);
         testy = datay(test_i{i},:);
+        % Prediction
+        [err_train, err_test, auc_train, auc_test] = prediction_error(algo, trainx, trainy, testx, testy);
+        scores(2,i) = err_test*[0.6; 0.4];
+        auc14{2,i} = auc_test{1};
+        auc15{2,i} = auc_test{2};
     end
-    
-    % Main part, where all the prediction is done
-    if (0)
-        prediction_train = randi(2,n-testsize,2)-1;
-        prediction_test = randi(2,testsize,2)-1;
-    end
-    if (1)
-        [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, 10000);
-    end
-    if (0)
-        kernel = @(x1, x2) laplacian_kernel(x1, x2, 0.1);
-        [prediction_train, prediction_test] = kernel_ridge_regression(kernel, trainx, trainy, testx, 0.1);
-    end
-    
-    % End of the main part, here we only compute the error and plot it
-
-    % Compute scores and curves and store the submission file
-    [sc, auc] = auc_error(prediction_train, trainy);
-    scores(1,i) = sc*[0.6; 0.4];
-    auc14{1,i} = auc{1};
-    auc15{1,i} = auc{2};
-        
-    if (submit_file)
-        create_submit_file(prediction_test);
-    else
-        [sc, auc] = auc_error(prediction_test, testy);
-        scores(2,i) = sc*[0.6; 0.4];
-        auc14{2,i} = auc{1};
-        auc15{2,i} = auc{2};
-    end
+    scores(1,i) = err_train*[0.6; 0.4];
+    auc14{1,i} = auc_train{1};
+    auc15{1,i} = auc_train{2};
 end
 fprintf(2, 'The predictions took %f seconds\n', time() - tt);
 
