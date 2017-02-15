@@ -15,8 +15,8 @@ function MAB = create_a_MAB(datainitx, datainity)
     % MAB : (structure) : Gathers all options of algorithms we want to test, including the data associated to each algo
     
     algo = algo_options();
-    MAB.trainsize = 12951-10000;
-    MAB.testsize = 6476-4000;
+    MAB.trainsize = 12951-6476;
+    MAB.testsize = 6476;
     
     MAB.datax{1} = datainitx(:,2:end);
     MAB.datay{1} = datainity(:,2:end);
@@ -32,10 +32,11 @@ function MAB = create_a_MAB(datainitx, datainity)
         MAB.data{iarm} = 1;
         iarm = iarm+1;
     end
+	if (0)
     algo.kernel = 1;
     algo.regression = 2;
-    for i = -9:10
-        for j = -9:10
+    for i = -5:0
+        for j = 6:10
             algo.regr_hyp = 10^i;
             algo.kernel_hyp = 10^j;
             MAB.arm{iarm} = algo;
@@ -45,8 +46,8 @@ function MAB = create_a_MAB(datainitx, datainity)
     end
     algo.kernel = 2;
     algo.regression = 2;
-    for i = -9:10
-        for j = -9:10
+    for i = -5:0
+        for j = -3:10
             algo.regr_hyp = 10^i;
             algo.kernel_hyp = 10^j;
             MAB.arm{iarm} = algo;
@@ -84,6 +85,7 @@ function MAB = create_a_MAB(datainitx, datainity)
             iarm = iarm+1;
         end
     end
+	end
     MAB.nbArms = iarm-1;
 
     MAB.draws = zeros(1,MAB.nbArms);

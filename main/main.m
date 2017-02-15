@@ -13,8 +13,8 @@ if (submit_file && (exist('datas') ~= 1))
 end
 
 % Options (useless if we are submitting a file)
-trainsize = 12951; % The trainsize
-testsize = 6476; % The testsize
+trainsize = 12951+3000; % The trainsize
+testsize = 6476-3000; % The testsize
 nb_tests = 100; % The number of tests
 setrand = 1; % The random generator beginning (-1 = no set)
 k = 10; %k of k_fold sets

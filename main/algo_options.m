@@ -2,11 +2,11 @@ function algo = algo_options()
 
     % Function that computes options of the prediction
 
-    algo.kernel = 0; % Linear kernel
-    %algo.kernel = 1; % Gaussian kernel
+    %algo.kernel = 0; % Linear kernel
+    algo.kernel = 1; % Gaussian kernel
     %algo.kernel = 2; % Laplacian kernel
 
-    algo.kernel_hyp = 0.1; % Hyperparameter of a kernel
+    algo.kernel_hyp = 1; % Hyperparameter of a kernel
 
     %algo.regression = 0; % Useless random regression
     algo.regression = 1; % Ridge regression
