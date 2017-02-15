@@ -1,5 +1,5 @@
-% The main file
-
+% Runs a multi armed bandit setup
+    
 % Initialization of paths
 init;
 

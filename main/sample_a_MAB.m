@@ -1,7 +1,14 @@
 function rew = sample_a_MAB(MAB, j)
 
     % Function that samples a MAB
+    
+    % Input :
+    % MAB : (structure) : Gathers all options of algorithms we want to test, including the data associated to each algo
+    % j   : (1*1)       : The algo we want to test
 
+    % Output :
+    % rew : (1*1) : The reward associated to the algorithm tested
+    
     assert(j <= size(MAB.arm, 2), 'Error : you cannot sample an inexisting arm');
     
     [train_i, test_i] = random_train_test_sets(MAB.trainsize, MAB.testsize, 1, MAB.draws(1,j)+1);

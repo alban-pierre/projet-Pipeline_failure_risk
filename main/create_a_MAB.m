@@ -2,6 +2,18 @@ function MAB = create_a_MAB(datainitx, datainity)
 
     % Function that create a multi armed bandit setup
 
+    % Dimensions :
+    % N  : Number of examples
+    % Dx : Dimension of examples
+    % Dy : Dimension of prediction
+    
+    % Input :
+    % datainitx : (N*Dx) : Input data
+    % datainity : (N*Dy) : Output of ml algo
+
+    % Output :
+    % MAB : (structure) : Gathers all options of algorithms we want to test, including the data associated to each algo
+    
     algo = algo_options();
     MAB.trainsize = 12951-10000;
     MAB.testsize = 6476-4000;
