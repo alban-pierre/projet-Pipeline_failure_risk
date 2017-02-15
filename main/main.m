@@ -15,8 +15,8 @@ end
 % Options (useless if we are submitting a file)
 trainsize = 12951; % The trainsize
 testsize = 6476; % The testsize
-nb_tests = 10; % The number of tests
-setrand = 3; % The random generator beginning (-1 = no set)
+nb_tests = 100; % The number of tests
+setrand = 1; % The random generator beginning (-1 = no set)
 k = 10; %k of k_fold sets
 algo = algo_options();
 

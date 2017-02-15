@@ -12,7 +12,7 @@ function algo = algo_options()
     algo.regression = 1; % Ridge regression
     %algo.regression = 2; % Kernel ridge regression
 
-    algo.regr_hyp = 10; % Hyperparameter of a regression
+    algo.regr_hyp = 100000; % Hyperparameter of a regression
 
     algo.error = 0; % AUC error
     %algo.error = 1; % Absolute error

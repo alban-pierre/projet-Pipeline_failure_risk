@@ -45,15 +45,15 @@ for i=1:size(train_i,2)
     testx = datax(test_i{i},:);
     testy = datay(test_i{i},:);
     % Prediction
-	for j = 1:size(kernel_hyp,2)
-		for k = 1:size(regr_hyp,2)
-			algo.kernel_hyp = kernel_hyp(1,j);
-			algo.regr_hyp = regr_hyp(1,k);
-			[err_tr, err_te, ~, ~] = prediction_error(algo, trainx, trainy, testx, testy);
-			err_train(j,k) = err_train(j,k) + err_tr*[0.6; 0.4];
-			err_test(j,k) = err_test(j,k) + err_te*[0.6; 0.4];
-		end
-	end
+    for j = 1:size(kernel_hyp,2)
+        for k = 1:size(regr_hyp,2)
+            algo.kernel_hyp = kernel_hyp(1,j);
+            algo.regr_hyp = regr_hyp(1,k);
+            [err_tr, err_te, ~, ~] = prediction_error(algo, trainx, trainy, testx, testy);
+            err_train(j,k) = err_train(j,k) + err_tr*[0.6; 0.4];
+            err_test(j,k) = err_test(j,k) + err_te*[0.6; 0.4];
+        end
+    end
 end
 fprintf(2, 'The predictions took %f seconds\n', time() - tt);
 
