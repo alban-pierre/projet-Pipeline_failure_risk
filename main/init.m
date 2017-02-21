@@ -1,6 +1,7 @@
 % Make initialisation
 
 addpath('../data/');
+addpath('../deep/');
 addpath('../errors/');
 addpath('../kernels/');
 addpath('../plots/');
