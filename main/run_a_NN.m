@@ -35,6 +35,10 @@ tt = time();
 datax = datainitx(:,2:end);
 datay = datainity(:,2:end);
 %datax = remove_constant_columns(add_power2_columns(datax, ones(size(datax,2))));
+datax = set_fixed_mean(datax);
+datax = set_fixed_variance(datax);
+%datax = remove_constant_columns(add_power2_columns(datax, ones(size(datax,2))));
+
 
 fprintf(2, 'The data representation transformation took %f seconds\n', time() - tt);
 
@@ -62,35 +66,91 @@ for i=1:size(train_i,2)
         testy = datay(test_i{i},:);
         % Prediction
         %[err_train, err_test, auc_train, auc_test] = prediction_error(algo, trainx, trainy, testx, testy);
-		NN = create_a_NN([12,30,20,2]);
-		NN = train_a_NN(NN, trainx, trainy, 0.01);
-
-		sigmoid = @(x) (1./(1+exp(-x)));
-		
-		for j=1:size(trainx,1)
-			NN.a{1} = trainx(j,:)';
-    
-			for ii=1:NN.nbr_layers-1
-				NN.z{ii} = NN.w{ii}*NN.a{ii} + NN.b{ii};
-				NN.a{ii+1} = sigmoid(NN.z{ii});
-			end
-			prediction_train(j,:) = NN.a{NN.nbr_layers};
+        NN = create_a_NN(algo);
+        NNN = NN;
+        N = size(trainx,1);
+        r = randperm(N);
+        clear err_tr;
+        clear err_te;
+        
+        for kk = 1:20
+            r = randperm(N);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 1);
+            [NN, prediction_train] = feed_forward_several(NN, trainx);
+            [NN, prediction_test] = feed_forward_several(NN, testx);
+            [err_tr(kk,:), ~] = auc_error(prediction_train, trainy);
+            [err_te(kk,:), ~] = auc_error(prediction_test, testy);
         end
-		for j=1:size(testx,1)
-			NN.a{1} = testx(j,:)';
-    
-			for ii=1:NN.nbr_layers-1
-				NN.z{ii} = NN.w{ii}*NN.a{ii} + NN.b{ii};
-				NN.a{ii+1} = sigmoid(NN.z{ii});
-			end
-			prediction_test(j,:) = NN.a{NN.nbr_layers};
+        for kk = 1:20
+            r = randperm(N);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.5);
+            [NN, prediction_train] = feed_forward_several(NN, trainx);
+            [NN, prediction_test] = feed_forward_several(NN, testx);
+            [err_tr(20+kk,:), ~] = auc_error(prediction_train, trainy);
+            [err_te(20+kk,:), ~] = auc_error(prediction_test, testy);
         end
+        for kk = 1:20
+            r = randperm(N);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.2);
+            [NN, prediction_train] = feed_forward_several(NN, trainx);
+            [NN, prediction_test] = feed_forward_several(NN, testx);
+            [err_tr(40+kk,:), ~] = auc_error(prediction_train, trainy);
+            [err_te(40+kk,:), ~] = auc_error(prediction_test, testy);
+        end
+        for kk = 1:20
+            r = randperm(N);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.1);
+            [NN, prediction_train] = feed_forward_several(NN, trainx);
+            [NN, prediction_test] = feed_forward_several(NN, testx);
+            [err_tr(60+kk,:), ~] = auc_error(prediction_train, trainy);
+            [err_te(60+kk,:), ~] = auc_error(prediction_test, testy);
+        end
+        for kk = 1:20
+            r = randperm(N);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.1);
+            [NN, prediction_train] = feed_forward_several(NN, trainx);
+            [NN, prediction_test] = feed_forward_several(NN, testx);
+            [err_tr(80+kk,:), ~] = auc_error(prediction_train, trainy);
+            [err_te(80+kk,:), ~] = auc_error(prediction_test, testy);
+        end
+        
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 1000);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 500);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 200);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 100);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 50);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 20);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
+        %r = randperm(N);
+        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
+        NNN = NN;
+        kk = 11;
+        r = randperm(N);
+        %NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 1);
+        [NN, prediction_train] = feed_forward_several(NN, trainx);
+        [NN, prediction_test] = feed_forward_several(NN, testx);
+        [err_tr(kk,:), ~] = auc_error(prediction_train, trainy);
+        [err_te(kk,:), ~] = auc_error(prediction_test, testy);
 
-		[err_train, auc_train] = auc_error(prediction_train, trainy);
+        
+        [NN, prediction_train] = feed_forward_several(NN, trainx);
+        [NN, prediction_test] = feed_forward_several(NN, testx);
+        
+        [err_train, auc_train] = auc_error(prediction_train, trainy);
         [err_test, auc_test] = auc_error(prediction_test, testy);
 
-		
-		scores(2,i) = err_test*[0.6; 0.4];
+        
+        scores(2,i) = err_test*[0.6; 0.4];
         auc14{2,i} = auc_test{1};
         auc15{2,i} = auc_test{2};
     end

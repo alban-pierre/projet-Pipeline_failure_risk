@@ -18,4 +18,10 @@ function algo = algo_options()
     %algo.error = 1; % Absolute error
     %algo.error = 2; % Square error
 
+    algo.deep.sizes = [12,20,10,2];
+    algo.deep.batchsize = 518;
+    algo.deep.dropout = 0.7;
+	algo.deep.uniformbatch = 1;
+	algo.deep.costfunction = 2; % 1 for square, 2 for cross entropy (better)
+    
 end
