@@ -1,7 +1,19 @@
 function test_a_NN(NN, algo, trainx, trainy, printall)
 
-    % Function that says if the neural network learns correctly
+    % Function that says if the neural network learns correctly, based on a learning example by example (no batchs)
 
+    % Dimensions :
+    % N  : Number of training examples
+    % Dx : Dimension of examples
+    % Dy : Dimension of prediction
+
+    % Input :
+    % NN       : (structure) : The neural network, containing coefficients, some parameters, etc
+    % algo     : (structure) : All parameters that defines an algorithm
+    % trainx   : (N*Dx)      : Training set
+    % trainy   : (N*Dy)      : Training output
+    % printall : (1*1)       : Set it to one to print all neural network parameters derivative dw and db
+    
     if (nargin < 5)
         printall = 0;
     end
@@ -44,7 +56,7 @@ function test_a_NN(NN, algo, trainx, trainy, printall)
         algo.deep.batchsize = 1;
         NNN = train_a_NN(NN, algo, trainx(itr,:), trainy(itr,:), 1);
         for l=1:size(NN.w,2)
-            a = NN.w{l} - NNN.w{l};
+            a = NNN.w{l} - NN.w{l};
             if (printall)
                 a./w{l}*epss
             end
@@ -52,7 +64,7 @@ function test_a_NN(NN, algo, trainx, trainy, printall)
             mi = min(min(min(a./w{l}*epss)), mi);
         end
         for l=1:size(NN.b,2)
-            a = NN.b{l} - NNN.b{l};
+            a = NNN.b{l} - NN.b{l};
             if (printall)
                 a./b{l}*epss
             end
@@ -62,19 +74,19 @@ function test_a_NN(NN, algo, trainx, trainy, printall)
         
         NN = feed_forward_one(NN, trainx(itr,:));
         NNN = feed_forward_one(NNN, trainx(itr,:));
-		if (algo.deep.costfunction == 1)
-			if (((NNN.a{Nn.nbr_layers}' - trainy(itr,:)).^2 - (NN.a{NN.nbr_layers}' - trainy(itr,:)).^2)*[0.6;0.4] < 0)
-				fprintf(2, 'Good direction\n');
-			else
-				fprintf(2, 'Bad direction\n');
-			end
-		else
-			if ((trainy(itr,:).*(log(NNN.a{NNN.nbr_layers})') + (1-trainy(itr,:)).*(log(1-NNN.a{NNN.nbr_layers})'))*[1;1] - (trainy(itr,:).*(log(NN.a{NN.nbr_layers})') + (1-trainy(itr,:)).*(log(1-NN.a{NN.nbr_layers})'))*[1;1] < 0)
-				fprintf(2, 'Good direction\n');
-			else
-				fprintf(2, 'Bad direction\n');
-			end
-		end
+        if (algo.deep.costfunction == 1)
+            if (((NNN.a{Nn.nbr_layers}' - trainy(itr,:)).^2 - (NN.a{NN.nbr_layers}' - trainy(itr,:)).^2)*[0.6;0.4] < 0)
+                fprintf(2, 'Good direction\n');
+            else
+                fprintf(2, 'Bad direction\n');
+            end
+        else
+            if ((trainy(itr,:).*(log(NNN.a{NNN.nbr_layers})') + (1-trainy(itr,:)).*(log(1-NNN.a{NNN.nbr_layers})'))*[1;1] - (trainy(itr,:).*(log(NN.a{NN.nbr_layers})') + (1-trainy(itr,:)).*(log(1-NN.a{NN.nbr_layers})'))*[1;1] < 0)
+                fprintf(2, 'Good direction\n');
+            else
+                fprintf(2, 'Bad direction\n');
+            end
+        end
     end
     fprintf(2, 'All errors are between %f and %f\n', mi-1, ma-1);
 

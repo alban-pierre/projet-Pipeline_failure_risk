@@ -1,20 +1,29 @@
-function [NN, res] = feed_forward_several(NN, datax)
+function [NN, resl, resbl] = feed_forward_several(NN, datax)
+
+    % Function that computes the result of the neural network for one example
+
+    % Dimensions :
+    % N  : Number of examples in the batch
+    % Dx : Dimension of examples
+    % Dy : Dimension of output
+    % Dc : Dimension of the before last layer
+    
+    % Input :
+    % NN    : (structure) : The neural network, containing coefficients, some parameters, etc
+    % datax : (N*Dx)      : Training set
+    
+    % Output :
+    % NN    : (structure) : The neural network, containing coefficients, some parameters, etc
+    % resl  : (N*Dy)      : The output of the neural network
+    % resbl : (N*Dc)      : The output of the before last layer of the neural network
 
     sigmoid = @(x) (1./(1+exp(-x)));
 
-    %dsigmoid = @(x) (sigmoid(x).*(1-sigmoid(x)));
-
-    res = zeros(size(datax,1),NN.sizes(1,end));
-    
-    for j=1:size(datax,1)
-        NN.a{1} = datax(j,:)';
-    
-        for i=1:NN.nbr_layers-1
-            NN.z{i} = NN.w{i}*NN.a{i} + NN.b{i};
-            NN.a{i+1} = sigmoid(NN.z{i});
-        end
-
-        res(j,:) = NN.a{NN.nbr_layers};
+    a{1} = datax';
+    for i=1:NN.nbr_layers-1
+        a{i+1} = sigmoid(NN.w{i}*a{i} + NN.b{i});
     end
+    resl = a{NN.nbr_layers}';
+    resbl = a{NN.nbr_layers-1}';
     
 end

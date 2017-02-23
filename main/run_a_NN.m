@@ -73,78 +73,18 @@ for i=1:size(train_i,2)
         clear err_tr;
         clear err_te;
         
-        for kk = 1:20
+        for kk = 1:2
             r = randperm(N);
-            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 1);
-            [NN, prediction_train] = feed_forward_several(NN, trainx);
-            [NN, prediction_test] = feed_forward_several(NN, testx);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 10);
+            [NN, prediction_train, ~] = feed_forward_several(NN, trainx);
+            [NN, prediction_test, ~] = feed_forward_several(NN, testx);
             [err_tr(kk,:), ~] = auc_error(prediction_train, trainy);
             [err_te(kk,:), ~] = auc_error(prediction_test, testy);
         end
-        for kk = 1:20
-            r = randperm(N);
-            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.5);
-            [NN, prediction_train] = feed_forward_several(NN, trainx);
-            [NN, prediction_test] = feed_forward_several(NN, testx);
-            [err_tr(20+kk,:), ~] = auc_error(prediction_train, trainy);
-            [err_te(20+kk,:), ~] = auc_error(prediction_test, testy);
-        end
-        for kk = 1:20
-            r = randperm(N);
-            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.2);
-            [NN, prediction_train] = feed_forward_several(NN, trainx);
-            [NN, prediction_test] = feed_forward_several(NN, testx);
-            [err_tr(40+kk,:), ~] = auc_error(prediction_train, trainy);
-            [err_te(40+kk,:), ~] = auc_error(prediction_test, testy);
-        end
-        for kk = 1:20
-            r = randperm(N);
-            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.1);
-            [NN, prediction_train] = feed_forward_several(NN, trainx);
-            [NN, prediction_test] = feed_forward_several(NN, testx);
-            [err_tr(60+kk,:), ~] = auc_error(prediction_train, trainy);
-            [err_te(60+kk,:), ~] = auc_error(prediction_test, testy);
-        end
-        for kk = 1:20
-            r = randperm(N);
-            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 0.1);
-            [NN, prediction_train] = feed_forward_several(NN, trainx);
-            [NN, prediction_test] = feed_forward_several(NN, testx);
-            [err_tr(80+kk,:), ~] = auc_error(prediction_train, trainy);
-            [err_te(80+kk,:), ~] = auc_error(prediction_test, testy);
-        end
         
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 1000);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 500);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 200);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 100);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 50);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 20);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
-        %r = randperm(N);
-        %NN = train_a_NN(NN, trainx(r,:), trainy(r,:), 10);
-        NNN = NN;
-        kk = 11;
-        r = randperm(N);
-        %NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 1);
-        [NN, prediction_train] = feed_forward_several(NN, trainx);
-        [NN, prediction_test] = feed_forward_several(NN, testx);
-        [err_tr(kk,:), ~] = auc_error(prediction_train, trainy);
-        [err_te(kk,:), ~] = auc_error(prediction_test, testy);
-
         
-        [NN, prediction_train] = feed_forward_several(NN, trainx);
-        [NN, prediction_test] = feed_forward_several(NN, testx);
+        [NN, prediction_train, ~] = feed_forward_several(NN, trainx);
+        [NN, prediction_test, ~] = feed_forward_several(NN, testx);
         
         [err_train, auc_train] = auc_error(prediction_train, trainy);
         [err_test, auc_test] = auc_error(prediction_test, testy);

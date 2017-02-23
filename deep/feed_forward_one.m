@@ -1,10 +1,18 @@
 function NN = feed_forward_one(NN, datax)
 
+    % Function that computes the result of the neural network for one example
+
+    % Dimensions :
+    % D : Dimension of examples
+    
+    % Input :
+    % NN    : (structure) : The neural network, containing coefficients, some parameters, etc
+    % datax : (1*D)       : The example that we have to compute the output on
+    
+    % Output :
+    % NN : (structure) : The neural network, containing coefficients, some parameters, etc
+
     sigmoid = @(x) (1./(1+exp(-x)));
-
-    %dsigmoid = @(x) (sigmoid(x).*(1-sigmoid(x)));
-
-    %res = zeros(size(datax,1),NN.sizes(1,end));
     
     NN.a{1} = datax(1,:)';
     

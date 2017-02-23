@@ -1,5 +1,13 @@
 function NN = create_a_NN(algo)
 
+    % Function that creates a neural network, defines its parameters
+
+    % Input :
+    % algo   : (structure) : All parameters that defines an algorithm
+
+    % Output :
+    % NN : (structure) : The neural network, containing coefficients, some parameters, etc
+    
     for i=1:size(algo.deep.sizes,2)-1
         NN.w{i} = randn(algo.deep.sizes(1,1+i), algo.deep.sizes(1,i));
         NN.b{i} = randn(algo.deep.sizes(1,1+i),1);
