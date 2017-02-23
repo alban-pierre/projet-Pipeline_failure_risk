@@ -73,19 +73,24 @@ for i=1:size(train_i,2)
         clear err_tr;
         clear err_te;
         
-        for kk = 1:2
+        for kk = 1:100
             r = randperm(N);
-            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 10);
-            [NN, prediction_train, ~] = feed_forward_several(NN, trainx);
-            [NN, prediction_test, ~] = feed_forward_several(NN, testx);
+            NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 1);
+            [NN, a] = feed_forward_several(NN, trainx);
+            prediction_train = a{end}';
+            [NN, a] = feed_forward_several(NN, testx);
+            prediction_test = a{end}';
             [err_tr(kk,:), ~] = auc_error(prediction_train, trainy);
             [err_te(kk,:), ~] = auc_error(prediction_test, testy);
+			fprintf(2,'*');
         end
+		fprintf(2,'\n');
         
-        
-        [NN, prediction_train, ~] = feed_forward_several(NN, trainx);
-        [NN, prediction_test, ~] = feed_forward_several(NN, testx);
-        
+        [NN, a] = feed_forward_several(NN, trainx);
+        prediction_train = a{end}';
+        [NN, a] = feed_forward_several(NN, testx);
+        prediction_test = a{end}';
+            
         [err_train, auc_train] = auc_error(prediction_train, trainy);
         [err_test, auc_test] = auc_error(prediction_test, testy);
 
@@ -104,3 +109,10 @@ fprintf(2, 'The predictions took %f seconds\n', time() - tt);
 mean(scores, 2)
 plot_auc(auc14, -1, {'Training AUC for 2014', 'Testing AUC for 2014'});
 plot_auc(auc15, -1, {'Training AUC for 2015', 'Testing AUC for 2015'});
+
+figure;
+hold on;
+plot(1:size(err_tr,1), err_tr(:,1)', 'k-');
+plot(1:size(err_tr,1), err_tr(:,2)', 'r-');
+plot(1:size(err_tr,1), err_te(:,1)', 'k.');
+plot(1:size(err_tr,1), err_te(:,2)', 'r.');

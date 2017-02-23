@@ -1,4 +1,4 @@
-function [NN, resl, resbl] = feed_forward_several(NN, datax)
+function [NN, a] = feed_forward_several(NN, datax)
 
     % Function that computes the result of the neural network for one example
 
@@ -23,7 +23,5 @@ function [NN, resl, resbl] = feed_forward_several(NN, datax)
     for i=1:NN.nbr_layers-1
         a{i+1} = sigmoid(NN.w{i}*a{i} + NN.b{i});
     end
-    resl = a{NN.nbr_layers}';
-    resbl = a{NN.nbr_layers-1}';
     
 end
