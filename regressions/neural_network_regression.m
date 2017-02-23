@@ -36,7 +36,7 @@ function [prediction_train, prediction_test] = neural_network_regression(deep, t
         err_te = zeros(deep.epoch,Dy);
         for kk = 1:deep.epoch
             r = randperm(Ntr);
-            NN = train_a_NN(NN, algoo, trainx(r,:), trainy(r,:), deep.learn_rate);
+            NN = train_a_NN(NN, algoo, trainx(r,:), trainy(r,:), deep.learn_rate(kk));
             [NN, a] = feed_forward_several(NN, trainx);
             prediction_train = a{end}';
             [NN, a] = feed_forward_several(NN, testx);
@@ -56,7 +56,7 @@ function [prediction_train, prediction_test] = neural_network_regression(deep, t
     else
         for kk = 1:deep.epoch
             r = randperm(Ntr);
-            NN = train_a_NN(NN, algoo, trainx(r,:), trainy(r,:), deep.learn_rate);
+            NN = train_a_NN(NN, algoo, trainx(r,:), trainy(r,:), deep.learn_rate(kk));
             fprintf(2,'Ep%d ', kk);
         end
         fprintf(2,'\n');
