@@ -13,9 +13,9 @@ if (submit_file && (exist('datas') ~= 1))
 end
 
 % Options (useless if we are submitting a file)
-trainsize = 12951+3000; % The trainsize
-testsize = 6476-3000; % The testsize
-nb_tests = 100; % The number of tests
+trainsize = 12951; % The trainsize
+testsize = 6476; % The testsize
+nb_tests = 3; % The number of tests
 setrand = 1; % The random generator beginning (-1 = no set)
 k = 10; %k of k_fold sets
 algo = algo_options();
@@ -34,7 +34,10 @@ clear auc15;
 tt = time();
 datax = datainitx(:,2:end);
 datay = datainity(:,2:end);
-datax = remove_constant_columns(add_power2_columns(datax, ones(size(datax,2))));
+%datax = remove_constant_columns(add_power2_columns(datax, ones(size(datax,2))));
+datax = set_fixed_mean(datax);
+datax = set_fixed_variance(datax);
+
 
 fprintf(2, 'The data representation transformation took %f seconds\n', time() - tt);
 

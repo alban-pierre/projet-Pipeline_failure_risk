@@ -39,6 +39,8 @@ function [err_train, err_test, sorted_err_train, sorted_err_test] = prediction_e
         [prediction_train, prediction_test] = ridge_regression(trainx, trainy, testx, algo.regr_hyp);
     elseif (algo.regression == 2)
         [prediction_train, prediction_test] = kernel_ridge_regression(kernel, trainx, trainy, testx, algo.regr_hyp);
+    elseif (algo.regression == 3)
+        [prediction_train, prediction_test] = neural_network_regression(algo.deep, trainx, trainy, testx, testy);
     end
     
     % Choices of errors

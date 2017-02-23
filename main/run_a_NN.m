@@ -73,7 +73,7 @@ for i=1:size(train_i,2)
         clear err_tr;
         clear err_te;
         
-        for kk = 1:100
+        for kk = 1:25
             r = randperm(N);
             NN = train_a_NN(NN, algo, trainx(r,:), trainy(r,:), 1);
             [NN, a] = feed_forward_several(NN, trainx);
@@ -82,9 +82,9 @@ for i=1:size(train_i,2)
             prediction_test = a{end}';
             [err_tr(kk,:), ~] = auc_error(prediction_train, trainy);
             [err_te(kk,:), ~] = auc_error(prediction_test, testy);
-			fprintf(2,'*');
+            fprintf(2,'*');
         end
-		fprintf(2,'\n');
+        fprintf(2,'\n');
         
         [NN, a] = feed_forward_several(NN, trainx);
         prediction_train = a{end}';
