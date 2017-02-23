@@ -54,9 +54,10 @@ function test_a_NN(NN, algo, trainx, trainy, printall)
         end
         algo.deep.uniformbatch = 1;
         algo.deep.batchsize = 1;
-        NNN = train_a_NN(NN, algo, trainx(itr,:), trainy(itr,:), 1);
+		NNN = NN;
+        NN = train_a_NN(NN, algo, trainx(itr,:), trainy(itr,:), 1);
         for l=1:size(NN.w,2)
-            a = NNN.w{l} - NN.w{l};
+            a = NN.w{l} - NNN.w{l};
             if (printall)
                 a./w{l}*epss
             end
@@ -64,7 +65,7 @@ function test_a_NN(NN, algo, trainx, trainy, printall)
             mi = min(min(min(a./w{l}*epss)), mi);
         end
         for l=1:size(NN.b,2)
-            a = NNN.b{l} - NN.b{l};
+            a = NN.b{l} - NNN.b{l};
             if (printall)
                 a./b{l}*epss
             end
