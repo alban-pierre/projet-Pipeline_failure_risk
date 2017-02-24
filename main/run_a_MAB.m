@@ -17,7 +17,7 @@ tt = time();
 
 MAB = create_a_MAB(datainitx, datainity);
 
-tmax = 12;
+tmax = 15;
 
 % Beginning of the UCB algorithm
 NbArms=MAB.nbArms;

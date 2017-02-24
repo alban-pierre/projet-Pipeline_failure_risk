@@ -36,6 +36,8 @@ function MAB = create_a_MAB(datainitx, datainity)
     MAB.datax{4} = set_fixed_mean(MAB.datax{2});
     MAB.datax{4} = set_fixed_variance(MAB.datax{4});
 
+    
+
 
     iarm = 1;
 
@@ -48,6 +50,12 @@ function MAB = create_a_MAB(datainitx, datainity)
 
     algo.regression = 3;
     algo.deep.learn_rate = @(k) 10/sqrt(k); % best so far
+    MAB.arm{iarm} = algo;
+    MAB.data{iarm} = 4;
+    iarm = iarm+1;
+
+    algo.regression = 3;
+    algo.deep.learn_rate = @(k) 5/sqrt(k); % best so far
     MAB.arm{iarm} = algo;
     MAB.data{iarm} = 4;
     iarm = iarm+1;
