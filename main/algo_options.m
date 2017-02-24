@@ -13,7 +13,7 @@ function algo = algo_options()
     %algo.regression = 2; % Kernel ridge regression
     %algo.regression = 3; % Neural network regression
 
-    algo.regr_hyp = 0.25; % Hyperparameter of a regression
+    algo.regr_hyp = 2.5; % Hyperparameter of a regression
 
     algo.error = 0; % AUC error
     %algo.error = 1; % Absolute error
@@ -25,7 +25,7 @@ function algo = algo_options()
     algo.deep.dropout = 0.7; % Dropout (0.8 = keep 20% of units)
     algo.deep.uniformbatch = 1; % Set it to 0 if some examples that have a rare output should be used more
     algo.deep.costfunction = 2; % 1 for square, 2 for cross entropy (better)
-    algo.deep.learn_rate = @(k) 5/sqrt(k); % A coefficient, which describe the learning rate
+    algo.deep.learn_rate = @(k) 10/sqrt(k); % A coefficient, which describe the learning rate
     algo.deep.epoch = 100; % The number of epochs
     algo.deep.show_epoch_err = 1; % Set it to >0 to plot the training and testing error of the network as a function of epoch, the number is the figure number
     

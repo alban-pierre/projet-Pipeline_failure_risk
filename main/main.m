@@ -35,11 +35,13 @@ tt = time();
 if (1)
     dataxx = datainitx(:,2:end);
     datay = datainity(:,2:end);
-    datax = remove_constant_columns(add_power2_columns(dataxx, ones(size(datax,2))));
+    datax = remove_constant_columns(add_power2_columns(dataxx, ones(size(dataxx,2))));
     datax = set_fixed_mean(datax);
     datax = set_fixed_variance(datax);
     datax = neural_network_representation(algo.deep, datax, datay);
     datax = [datax, dataxx];
+	datax = set_fixed_mean(datax);
+	datax = set_fixed_variance(datax);
 end
 
 fprintf(2, 'The data representation transformation took %f seconds\n', time() - tt);
@@ -47,9 +49,23 @@ fprintf(2, 'The data representation transformation took %f seconds\n', time() - 
 if (submit_file) % In the particular case of submitting
     testsize = 9713;
     nb_tests = 1;
-    trainx = datainitx(:,2:end);
-    trainy = datainity(:,2:end);
-    testx = datas(:,2:end);
+	if (0)
+		trainx = datainitx(:,2:end);
+		trainy = datainity(:,2:end);
+		testx = datas(:,2:end);
+	else
+		trainx = datax;
+		trainy = datay;
+		testx = datas(:,2:end);
+		testx = remove_constant_columns(add_power2_columns(testx, ones(size(testx,2))));
+		testx = set_fixed_mean(testx);
+		testx = set_fixed_variance(testx);
+		load('NN.mat');
+		[NN, a] = feed_forward_several(NN, testx);
+		testx = [a{end-1}', datas(:,2:end)];
+		testx = set_fixed_mean(testx);
+		testx = set_fixed_variance(testx);
+	end
     train_i = 0;
     scores = 0;
 end
