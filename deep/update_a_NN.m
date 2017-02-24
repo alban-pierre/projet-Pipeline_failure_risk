@@ -87,6 +87,7 @@ function NN = update_a_NN(NN, algo, datax, datay, learn_rate)
             dCdw{i} = ((dCdb{i})*(a{i}'))./size(datax,1); % (Da*Da) % meaned
             dCdb{i} = mean(dCdb{i},2);
             if (i>1)
+                MdCda = zeros(size(datax,1), NN.sizes(1,i));
                 for j=1:size(datax,1)
                     MdCda(j,:) = dCda(j,:)*dada{j,i}; % (N*Da)
                 end
