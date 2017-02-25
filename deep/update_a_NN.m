@@ -10,8 +10,8 @@ function NN = update_a_NN(NN, algo, datax, datay, learn_rate)
     % Input :
     % NN         : (structure) : The neural network, containing coefficients, some parameters, etc
     % algo       : (structure) : All parameters that defines an algorithm
-    % datax     : (N*Dx)      : Training set
-    % datay     : (N*Dy)      : Training output
+    % datax      : (N*Dx)      : Training set
+    % datay      : (N*Dy)      : Training output
     % learn_rate : (1*1)       : The learning rate of our neural network
 
     % Output :
@@ -23,12 +23,13 @@ function NN = update_a_NN(NN, algo, datax, datay, learn_rate)
         dCdb{i} = zeros(size(NN.b{i}));
         dCdw{i} = zeros(size(NN.w{i}));
     end
-    
-    for j=1:size(datax,1)
-    
-        NN = feed_forward_one(NN, datax(j,:));
+
+    if (algo.deep.costfunction == 1)
         
-        if (algo.deep.costfunction == 1)
+        for j=1:size(datax,1)
+    
+            NN = feed_forward_one(NN, datax(j,:));
+        
             % In the case of a square cost function, we can set it in the matrix form as well but it is useless so ...
             dCda = 2*(NN.a{NN.nbr_layers}' - datay(j,:)).*[0.6,0.4];
             for i=NN.nbr_layers-1:-1:1
@@ -103,6 +104,11 @@ function NN = update_a_NN(NN, algo, datax, datay, learn_rate)
         end
     end
 
+    % L2 regularization
+    for i=NN.nbr_layers-1:-1:1
+        dCdw{i} = dCdw{i} - algo.deep.regularization/size(datax,1)*NN.w{i};
+    end
+    
     % Update parameters
     for i=NN.nbr_layers-1:-1:1
         NN.b{i} = NN.b{i} + learn_rate*dCdb{i};

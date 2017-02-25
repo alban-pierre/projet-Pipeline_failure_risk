@@ -41,21 +41,23 @@ function MAB = create_a_MAB(datainitx, datainity)
 
     iarm = 1;
 
-    algo.regression = 1;
+    %algo.regression = 1;
 
-    algo.regr_hyp = 100000;
-    MAB.arm{iarm} = algo;
-    MAB.data{iarm} = 1;
-    iarm = iarm+1;
+    %algo.regr_hyp = 100000;
+    %MAB.arm{iarm} = algo;
+    %MAB.data{iarm} = 1;
+    %iarm = iarm+1;
 
     algo.regression = 3;
     algo.deep.learn_rate = @(k) 10/sqrt(k); % best so far
-    MAB.arm{iarm} = algo;
+	algo.deep.regularization = 0;
+	MAB.arm{iarm} = algo;
     MAB.data{iarm} = 4;
     iarm = iarm+1;
-
+	
+	if (0)
     algo.regression = 3;
-    algo.deep.learn_rate = @(k) 5/sqrt(k); % best so far
+    algo.deep.learn_rate = @(k) 10/sqrt(k); % best so far
     MAB.arm{iarm} = algo;
     MAB.data{iarm} = 4;
     iarm = iarm+1;
@@ -69,7 +71,7 @@ function MAB = create_a_MAB(datainitx, datainity)
     MAB.arm{iarm} = algo;
     MAB.data{iarm} = 4;
     iarm = iarm+1;
-
+end
 
     if (0)
     algo.regression = 1;
