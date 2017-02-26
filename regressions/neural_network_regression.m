@@ -30,7 +30,8 @@ function [prediction_train, prediction_test] = neural_network_regression(deep, t
     algoo.deep = deep;
 
     NN = create_a_NN(algoo);
-
+    %load('NN7.mat');
+    
     if (deep.show_epoch_err ~= 0)
         err_tr = zeros(deep.epoch,Dy);
         err_te = zeros(deep.epoch,Dy);
@@ -52,7 +53,7 @@ function [prediction_train, prediction_test] = neural_network_regression(deep, t
         plot(1:size(err_tr,1), err_tr(:,2)', 'r-');
         plot(1:size(err_tr,1), err_te(:,1)', 'k.');
         plot(1:size(err_tr,1), err_te(:,2)', 'r.');
-        legend('train 2014', 'train 2015', 'test 2014', 'test 2015');
+        legend('train 2014', 'train 2015', 'test 2014', 'test 2015', 'location', 'southeast');
     else
         for kk = 1:deep.epoch
             r = randperm(Ntr);
@@ -66,5 +67,7 @@ function [prediction_train, prediction_test] = neural_network_regression(deep, t
         [NN, a] = feed_forward_several(NN, testx);
         prediction_test = a{end}';  
     end
+    
+    save('NN.mat', 'NN');
     
 end

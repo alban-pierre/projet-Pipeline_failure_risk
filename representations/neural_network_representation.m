@@ -41,7 +41,7 @@ function repr = neural_network_representation(deep, trainx, trainy)
         figure(deep.show_epoch_err); hold on;
         plot(1:size(err_tr,1), err_tr(:,1)', 'k-');
         plot(1:size(err_tr,1), err_tr(:,2)', 'r-');
-        legend('train 2014', 'train 2015');
+        legend('train 2014', 'train 2015', 'location', 'southeast');
     else
         for kk = 1:deep.epoch
             r = randperm(N);

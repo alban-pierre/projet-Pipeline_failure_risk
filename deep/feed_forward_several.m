@@ -11,6 +11,9 @@ function [NN, a] = feed_forward_several(NN, datax)
     % Input :
     % NN    : (structure) : The neural network, containing coefficients, some parameters, etc
     % datax : (N*Dx)      : Training set
+
+    % Optionnal input :
+    % dropout_ind : {1*NbrLayers}(Da*1) : The indexes to keep if we use dropout
     
     % Output :
     % NN    : (structure) : The neural network, containing coefficients, some parameters, etc

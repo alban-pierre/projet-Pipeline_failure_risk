@@ -50,12 +50,12 @@ function MAB = create_a_MAB(datainitx, datainity)
 
     algo.regression = 3;
     algo.deep.learn_rate = @(k) 10/sqrt(k); % best so far
-	algo.deep.regularization = 0;
-	MAB.arm{iarm} = algo;
+    algo.deep.regularization = 0;
+    MAB.arm{iarm} = algo;
     MAB.data{iarm} = 4;
     iarm = iarm+1;
-	
-	if (0)
+    
+    if (0)
     algo.regression = 3;
     algo.deep.learn_rate = @(k) 10/sqrt(k); % best so far
     MAB.arm{iarm} = algo;
