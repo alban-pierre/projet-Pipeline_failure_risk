@@ -30,7 +30,7 @@ function [prediction_train, prediction_test] = neural_network_regression(deep, t
     algoo.deep = deep;
 
     NN = create_a_NN(algoo);
-    %load('NN7.mat');
+    %load('NN.mat');
     
     if (deep.show_epoch_err ~= 0)
         err_tr = zeros(deep.epoch,Dy);
