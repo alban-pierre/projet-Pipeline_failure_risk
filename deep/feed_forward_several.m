@@ -23,8 +23,16 @@ function [NN, a] = feed_forward_several(NN, datax)
     sigmoid = @(x) (1./(1+exp(-x)));
 
     a{1} = datax';
-    for i=1:NN.nbr_layers-1
+
+    if (NN.activation_function == 1) % sigmoid
+        for i=1:NN.nbr_layers-1
+            a{i+1} = sigmoid(NN.w{i}*a{i} + NN.b{i});
+        end
+    else % ReLU
+        for i=1:NN.nbr_layers-2
+            a{i+1} = max(NN.w{i}*a{i} + NN.b{i}, 0);
+        end
+        i = NN.nbr_layers-1;
         a{i+1} = sigmoid(NN.w{i}*a{i} + NN.b{i});
     end
-    
 end

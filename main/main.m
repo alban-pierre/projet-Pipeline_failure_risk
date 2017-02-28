@@ -15,7 +15,7 @@ end
 % Options (useless if we are submitting a file)
 trainsize = 12951; % The trainsize
 testsize = 6476; % The testsize
-nb_tests = 1; % The number of tests
+nb_tests = 100; % The number of tests
 setrand = 1; % The random generator beginning (-1 = no set)
 k = 10; %k of k_fold sets
 algo = algo_options();
@@ -48,7 +48,7 @@ else
     %datax = remove_constant_columns(add_power2_columns(datax, ones(size(datax,2))));
     datax = set_fixed_mean(datax);
     datax = set_fixed_variance(datax);
-    load('NNs.mat');
+    load('NN.mat');
     [NN, a] = feed_forward_several(NN, datax);
     datax = [a{end}'];%, datainitx(:,2:end)];
     datax = set_fixed_mean(datax);
@@ -71,7 +71,7 @@ if (submit_file) % In the particular case of submitting
         %testx = remove_constant_columns(add_power2_columns(testx, ones(size(testx,2))));
         testx = set_fixed_mean(testx);
         testx = set_fixed_variance(testx);
-        load('NNs.mat');
+        load('NN.mat');
         [NN, a] = feed_forward_several(NN, testx);
         testx = [a{end}'];%, datas(:,2:end)];
         testx = set_fixed_mean(testx);
